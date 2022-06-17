@@ -9,21 +9,30 @@ using UnityEditor;
 
 public class TitleScreenUI : MonoBehaviour
 {
+    [SerializeField] GameObject[] objectsToHide;
+    [SerializeField] TMP_InputField nameEntryText;
+    [SerializeField] TMP_Text highscore;
+
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (GameManager.instance.hasSaved)
+        {
+            highscore.text = GameManager.instance.bestPlayer + " ~ " + GameManager.instance.highscore.ToString();
+        }
+        else
+        {
+            foreach (GameObject obj in objectsToHide)
+            {
+                obj.SetActive(false);
+            }
+        }
     }
 
     //Start the game
     public void StartGame()
     {
+        GameManager.instance.playerName = nameEntryText.text;
         SceneManager.LoadScene(1);
     }
 
