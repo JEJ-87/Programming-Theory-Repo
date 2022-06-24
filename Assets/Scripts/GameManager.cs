@@ -6,9 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance { get; private set; }
+    [HideInInspector] public static GameManager instance { get; private set; }
 
-    public string playerName;
+    [HideInInspector] public string playerName;
+    public int score;
 
     [Header("Data To Save")]
     public string bestPlayer;

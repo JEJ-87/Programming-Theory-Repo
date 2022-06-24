@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody m_rb;
     Animator m_anim;
+    AudioSource m_Audio;
 
     bool isGrounded = true;
 
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
     {
         m_rb = GetComponent<Rigidbody>();
         m_anim = GetComponentInChildren<Animator>();
+        m_Audio = GetComponent<AudioSource>();
 
         Physics.gravity = Vector3.up * gravity;
     }
@@ -28,13 +30,22 @@ public class PlayerController : MonoBehaviour
     {
         //Player Controls
         //Move
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
         {
             Move(Speed * -1);
         }
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
         {
             Move(Speed);
+        }
+
+        if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+        {
+            StopMoving();
+        }
+        else if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
+        {
+            StopMoving();
         }
 
         //Jump
@@ -46,7 +57,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        isGrounded = true;
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+            m_anim.SetBool("isGrounded", true);
+        }
     }
 
     private void Move(float direction)
@@ -54,12 +69,23 @@ public class PlayerController : MonoBehaviour
         Vector2 target = new Vector2(transform.position.x + (direction * Time.deltaTime), transform.position.y);
         transform.LookAt(target);
         transform.position = target;
+        m_anim.SetBool("isRunning", true);
+    }
+
+    void StopMoving()
+    {
+        Vector3 target = new Vector3(transform.position.x, transform.position.y, transform.position.z - 5);
+        transform.LookAt(target);
+
+        m_anim.SetBool("isRunning", false);
     }
 
     private void Jump()
     {
+        m_Audio.Play();
         m_rb.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
         m_anim.SetTrigger("Jump");
+        m_anim.SetBool("isGrounded", false);
         isGrounded = false;
     }
 }
