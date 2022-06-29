@@ -5,16 +5,19 @@ using TMPro;
 
 public class Fruit : MonoBehaviour
 {
+    [HideInInspector] public SpawnerSwitch spawner;
+
     [SerializeField] protected int score;
     [SerializeField] protected float rotationSpeed;
-    [SerializeField] protected ObjectPooler fruitToast;
     [SerializeField] protected AudioClip fruitClip;
 
+    protected ObjectPooler fruitToast;
     protected AudioSource m_Audio;
 
     // Start is called before the first frame update
     void Start()
     {
+        fruitToast = GameObject.Find("Toast_POOL").GetComponent<ObjectPooler>();
         m_Audio = fruitToast.gameObject.GetComponent<AudioSource>();
     }
 
@@ -41,6 +44,8 @@ public class Fruit : MonoBehaviour
     protected virtual void FruitGet()
     {
         GameManager.instance.score += score;
+        SpawnManager.instance.fruitCount--;
+        spawner.isOccupied = false;
         gameObject.SetActive(false);
     }
 }

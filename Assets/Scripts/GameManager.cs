@@ -1,80 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [HideInInspector] public static GameManager instance { get; private set; }
+    public static GameManager instance { get; private set; }
 
-    [HideInInspector] public string playerName;
-    public int score;
+    [HideInInspector] public bool isGameOver = false;
+    [HideInInspector] public int score;
+    [HideInInspector] public int challenge;
 
-    [Header("Data To Save")]
-    public string bestPlayer;
-    public int highscore;
-    public bool hasSaved;
+    [Header("Settings")]
+    [Min(0)] public int challengeThreshold;
+    [SerializeField] GameObject gameOverGroup;
+
+    int m_threshold;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (instance != null)
-        {
-            Destroy(gameObject);
-        }
-
         instance = this;
-        DontDestroyOnLoad(gameObject);
 
-        LoadData();
+        m_threshold = challengeThreshold;
     }
 
-    //Persistent Data To Save
-    [System.Serializable]
-    class DataToSave
+    // Update is called once per frame
+    void Update()
     {
-        public string bestPlayer;
-        public int highscore;
-        public bool hasSaved;
-    }
-
-    public void SaveData()
-    {
-        hasSaved = true;
-
-        DataToSave data = new DataToSave();
-        data.bestPlayer = bestPlayer;
-        data.highscore = highscore;
-        data.hasSaved = hasSaved;
-        string json = JsonUtility.ToJson(data);
-        File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
-    }
-
-    public void LoadData()
-    {
-        string path = Application.persistentDataPath + "/savefile.json";
-        if (File.Exists(path))
+        if (score >= m_threshold)
         {
-            string json = File.ReadAllText(path);
-            DataToSave data = JsonUtility.FromJson<DataToSave>(json);
-            bestPlayer = data.bestPlayer;
-            highscore = data.highscore;
-            hasSaved = data.hasSaved;
+            ChallengeUp();
         }
     }
 
-    public void DeleteSaveData()
+    //Increase the challenge level
+    void ChallengeUp()
     {
-        bestPlayer = null;
-        highscore = 0;
-        hasSaved = false;
+        m_threshold += challengeThreshold;
+        challenge++;
+        SpawnManager.instance.SpawnEnemy();
+    }
 
-        string path = Application.persistentDataPath + "/savefile.json";
-        if (File.Exists(path))
-        {
-            File.Delete(path);
-            SceneManager.LoadScene(0);
-        }
+    public void GameOver()
+    {
+        gameOverGroup.SetActive(true);
+        isGameOver = true;
     }
 }

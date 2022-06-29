@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WrapWarp : MonoBehaviour
+public class FallWarp : MonoBehaviour
 {
     [SerializeField] GameObject warpTarget;
 
@@ -17,8 +17,8 @@ public class WrapWarp : MonoBehaviour
 
     void Warp(GameObject warpObject)
     {
-            warpObject.transform.position = new Vector3(warpTarget.transform.position.x,
-                                            warpObject.transform.position.y,
-                                            0);
+        warpObject.transform.position = new Vector3(warpObject.transform.position.x,
+                                        warpTarget.transform.position.y,
+                                        0);
     }
 }

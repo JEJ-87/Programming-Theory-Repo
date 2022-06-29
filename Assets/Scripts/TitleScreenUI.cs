@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using TMPro;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -11,14 +12,16 @@ public class TitleScreenUI : MonoBehaviour
 {
     [SerializeField] GameObject[] objectsToHide;
     [SerializeField] TMP_InputField nameEntryText;
-    [SerializeField] TMP_Text highscore;
+    [SerializeField] TextMeshProUGUI highscore;
+    [SerializeField] Button startButton;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (GameManager.instance.hasSaved)
+        if (DataManager.instance.hasSaved)
         {
-            highscore.text = GameManager.instance.bestPlayer + " ~ " + GameManager.instance.highscore.ToString();
+            nameEntryText.text = DataManager.instance.playerName;
+            highscore.text = DataManager.instance.bestPlayer + " ~ " + DataManager.instance.highscore.ToString();
         }
         else
         {
@@ -29,11 +32,27 @@ public class TitleScreenUI : MonoBehaviour
         }
     }
 
+    private void LateUpdate()
+    {
+        if (nameEntryText.text == "")
+        {
+            startButton.interactable = false;
+        }
+        else
+        {
+            startButton.interactable = true;
+        }
+    }
     //Start the game
     public void StartGame()
     {
-        GameManager.instance.playerName = nameEntryText.text;
+        DataManager.instance.playerName = nameEntryText.text;
         SceneManager.LoadScene(1);
+    }
+
+    public void resetButton()
+    {
+        DataManager.instance.DeleteSaveData();
     }
 
     //Quit application

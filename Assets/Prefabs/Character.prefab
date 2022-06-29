@@ -46,9 +46,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 2
+  m_Height: 1.8
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!54 &3119862507923306987
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -77,9 +77,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd0c5d6293d78204e8217680663e0393, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerClips:
+  - {fileID: 8300000, guid: 2bba4c060758dee4686d26f51962ecfe, type: 3}
+  - {fileID: 8300000, guid: 962e359ec0af9a840a612702a1faa27b, type: 3}
+  hp: 3
+  kbForce: 8
+  ouchTime: 0.4
+  iFrames: 3
+  playerMaterial: {fileID: 2100000, guid: 4ca940cff019c41fb900ba772d2028fd, type: 2}
   Speed: 7
   JumpForce: 15
-  gravity: -50
+  gravity: -45
 --- !u!82 &4822387177153802652
 AudioSource:
   m_ObjectHideFlags: 0
@@ -90,7 +98,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 2bba4c060758dee4686d26f51962ecfe, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

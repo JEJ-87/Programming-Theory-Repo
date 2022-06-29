@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Fruit
+  - Spawner
+  - Enemy
   layers:
   - Default
   - TransparentFX

@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 2c850af25710e1e4d82407c910a2afea, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -280,7 +280,7 @@ GameObject:
   - component: {fileID: 208411903}
   - component: {fileID: 208411902}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: DataManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -733,6 +733,7 @@ MonoBehaviour:
   - {fileID: 895825447}
   nameEntryText: {fileID: 952317505}
   highscore: {fileID: 1967549119}
+  startButton: {fileID: 945222665}
 --- !u!1 &541866925
 GameObject:
   m_ObjectHideFlags: 0
@@ -1006,9 +1007,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 208411902}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: DeleteSaveData
+      - m_Target: {fileID: 540939618}
+        m_TargetAssemblyTypeName: TitleScreenUI, Assembly-CSharp
+        m_MethodName: resetButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

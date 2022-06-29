@@ -5,9 +5,19 @@ using UnityEngine;
 public class ObjectPooler : MonoBehaviour
 {
     public GameObject objectToPool;
-    [SerializeField] int spawnCount;
+    [SerializeField][Min(0)] int spawnCount;
+    public int countSpawned
+    {
+        get
+        {
+            return spawnCount;
+        }
+        private set
+        {
 
-    [HideInInspector] public List<GameObject> pooledObjects;
+        }
+    }
+    public List<GameObject> pooledObjects { get; private set; }
 
 
     void Start()
