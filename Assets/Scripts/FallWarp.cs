@@ -15,6 +15,8 @@ public class FallWarp : MonoBehaviour
         }
     }
 
+    //ABSTRACTION
+    //Warp vertical screen wrap
     void Warp(GameObject warpObject)
     {
         warpObject.transform.position = new Vector3(warpObject.transform.position.x,

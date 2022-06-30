@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+//INHERITENCE
 public class Fruit_Banana : Fruit
 {
+    //POLYMORPHISM
     protected override void FruitGet()
     {
         base.FruitGet();

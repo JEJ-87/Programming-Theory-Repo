@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    //ENCAPSULATION
     public static GameManager instance { get; private set; }
 
     [HideInInspector] public bool isGameOver = false;
@@ -13,6 +14,9 @@ public class GameManager : MonoBehaviour
     [Header("Settings")]
     [Min(0)] public int challengeThreshold;
     [SerializeField] GameObject gameOverGroup;
+    [SerializeField] AudioClip[] audioClips;
+
+    AudioSource m_Audio;
 
     int m_threshold;
 
@@ -20,6 +24,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         instance = this;
+
+        m_Audio = GetComponent<AudioSource>();
 
         m_threshold = challengeThreshold;
     }
@@ -33,17 +39,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //ABSTRACTION
     //Increase the challenge level
     void ChallengeUp()
     {
         m_threshold += challengeThreshold;
         challenge++;
+        m_Audio.PlayOneShot(audioClips[0]);
         SpawnManager.instance.SpawnEnemy();
     }
 
+    //Enter GameOver state
     public void GameOver()
     {
         gameOverGroup.SetActive(true);
+        m_Audio.PlayOneShot(audioClips[1]);
         isGameOver = true;
     }
 }

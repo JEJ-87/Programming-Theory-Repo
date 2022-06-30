@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
+    //ENCAPSULATION
     public static SpawnManager instance { get; private set; }
+
     [HideInInspector] public int fruitCount;
+
     [Header("General Settings")]
     [SerializeField] GameObject Character;
     [SerializeField] float distanceFromCharacter;
@@ -29,12 +32,15 @@ public class SpawnManager : MonoBehaviour
         instance = this;
     }
 
+    //ABSTRACTION
+    //Returns a random number within range of provided index
     int GetRandomIndex(int arrayLength)
     {
         int result = Random.Range(0, arrayLength);
         return result;
     }
 
+    //Spawn fruit
     IEnumerator SpawnFruit()
     {
         yield return new WaitForSeconds(fruitSpawnTime);
@@ -70,6 +76,7 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(SpawnFruit());
     }
 
+    //Spawn Enemy and Increase enemy speed
     public void SpawnEnemy()
     {
         foreach (Enemy enemy in enemyCount)

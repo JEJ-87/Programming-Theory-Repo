@@ -43,13 +43,17 @@ public class TitleScreenUI : MonoBehaviour
             startButton.interactable = true;
         }
     }
+
+    //ABSTRACTION
     //Start the game
     public void StartGame()
     {
         DataManager.instance.playerName = nameEntryText.text;
+        MusicManager.instance.SwitchMusic(1);
         SceneManager.LoadScene(1);
     }
 
+    //reset the game
     public void resetButton()
     {
         DataManager.instance.DeleteSaveData();

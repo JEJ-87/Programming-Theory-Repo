@@ -6,16 +6,20 @@ using UnityEngine.SceneManagement;
 
 public class DataManager : MonoBehaviour
 {
+    //ENCAPSULATION
     public static DataManager instance { get; private set; }
 
-    [Header("Data To Save")]
     public string playerName;
+    public bool tutorialComplete;
+
+
+    [Header("Data To Save")]
     public string bestPlayer;
     public int highscore;
     public bool hasSaved;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (instance != null)
         {
@@ -40,6 +44,7 @@ public class DataManager : MonoBehaviour
     }
 
     //ABSTRACTION
+    //Saves data
     public void SaveData()
     {
         hasSaved = true;
@@ -52,6 +57,7 @@ public class DataManager : MonoBehaviour
         File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
     }
 
+    //Loads saved data
     public void LoadData()
     {
         string path = Application.persistentDataPath + "/savefile.json";
@@ -65,6 +71,7 @@ public class DataManager : MonoBehaviour
         }
     }
 
+    //Deletes saved data
     public void DeleteSaveData()
     {
         bestPlayer = null;

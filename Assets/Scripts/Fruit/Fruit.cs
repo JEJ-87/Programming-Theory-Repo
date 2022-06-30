@@ -29,18 +29,22 @@ public class Fruit : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" && !GameManager.instance.isGameOver)
         {
             FruitGet();
         }
     }
 
+    //ABSTRACTION
+    //Provide linear rotation to fruit
     protected void FruitRotate()
     {
         Vector3 target = new Vector3(0, transform.rotation.y + rotationSpeed, 0);
         transform.Rotate(target * Time.deltaTime);
     }
 
+    //POLYMORPHISM
+    //Collect fruit and add points
     protected virtual void FruitGet()
     {
         GameManager.instance.score += score;

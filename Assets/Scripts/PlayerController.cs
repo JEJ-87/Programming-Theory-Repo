@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (playerHealth == 0)
+        if (playerHealth == 0 && !GameManager.instance.isGameOver)
         {
             GameManager.instance.GameOver();
         }
@@ -100,8 +100,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnCollisionStay(Collision collision)
+    {
+        //Enemy collision handling
+        if (collision.gameObject.CompareTag("Enemy") && !isInvincible)
+        {
+            DamagePlayer(collision.transform.position);
+        }
+    }
+
 
     //ABSTRACTION
+    //Move in provided direction axis
     private void Move(float direction)
     {
         Vector2 target = new Vector2(transform.position.x + (direction * Time.deltaTime), transform.position.y);
@@ -110,6 +120,7 @@ public class PlayerController : MonoBehaviour
         m_anim.SetBool("isRunning", true);
     }
 
+    //Reset rotation and anim to default
     void StopMoving()
     {
         Vector3 target = new Vector3(transform.position.x, transform.position.y, transform.position.z - 5);
@@ -118,6 +129,7 @@ public class PlayerController : MonoBehaviour
         m_anim.SetBool("isRunning", false);
     }
 
+    //Do a jump
     private void Jump()
     {
         m_Audio.PlayOneShot(playerClips[0]);
@@ -127,6 +139,7 @@ public class PlayerController : MonoBehaviour
         isGrounded = false;
     }
 
+    //Apply damage to player
     private void DamagePlayer(Vector3 enemyPos)
     {
         StartCoroutine(StopMove());
@@ -140,6 +153,7 @@ public class PlayerController : MonoBehaviour
         m_Audio.PlayOneShot(playerClips[1]);
     }
 
+    //Force player to stop moving
     IEnumerator StopMove()
     {
         m_anim.SetBool("isRunning", false);
@@ -149,6 +163,8 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(ouchTime);
         isOuching = false;
     }
+
+    //Player invulnerability period
     IEnumerator I_Frames()
     {
         isInvincible = true;

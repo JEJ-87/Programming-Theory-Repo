@@ -28,6 +28,7 @@ public class UI_Manager : MonoBehaviour
         challenge_TXT.text = "Challenge ~ " + GameManager.instance.challenge;
     }
 
+    //ABSTRACTION
     public void ReturnToMainMenu()
     {
         if (GameManager.instance.score > DataManager.instance.highscore)
@@ -36,6 +37,7 @@ public class UI_Manager : MonoBehaviour
             DataManager.instance.highscore = GameManager.instance.score;
             DataManager.instance.SaveData();
         }
+        MusicManager.instance.SwitchMusic(0);
         SceneManager.LoadScene(0);
     }
 
